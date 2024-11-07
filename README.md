@@ -1,0 +1,1 @@
+# parsekit-str-to-bool
