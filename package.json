@@ -1,6 +1,6 @@
 {
     "name": "@parsekit/string-to-boolean",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A robust TypeScript utility to convert strings to boolean values with extensive options and type safety",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

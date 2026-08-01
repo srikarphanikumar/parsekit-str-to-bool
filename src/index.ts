@@ -42,8 +42,23 @@ export function stringToBoolean(
         normalizedValue = normalizedValue.toLowerCase();
     }
 
-    const truthyValues = new Set(mergedOptions.truthyValues);
-    const falsyValues = new Set(mergedOptions.falsyValues);
+    const normalizeConfiguredValue = (configuredValue: string): string => {
+        let normalizedValue = configuredValue;
+        if (mergedOptions.trimInput) {
+            normalizedValue = normalizedValue.trim();
+        }
+        if (!mergedOptions.caseSensitive) {
+            normalizedValue = normalizedValue.toLowerCase();
+        }
+        return normalizedValue;
+    };
+
+    const truthyValues = new Set(
+        mergedOptions.truthyValues.map(normalizeConfiguredValue)
+    );
+    const falsyValues = new Set(
+        mergedOptions.falsyValues.map(normalizeConfiguredValue)
+    );
 
     if (truthyValues.has(normalizedValue)) {
         return true;

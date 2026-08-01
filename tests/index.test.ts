@@ -56,6 +56,23 @@ describe('stringToBoolean', () => {
             ).toBe(false);
         });
 
+        test('normalizes custom values using the configured options', () => {
+            expect(
+                stringToBoolean(' YES ', {
+                    truthyValues: [' yes '],
+                    caseSensitive: false,
+                    trimInput: true
+                })
+            ).toBe(true);
+
+            expect(
+                stringToBoolean('NO', {
+                    falsyValues: ['no'],
+                    caseSensitive: false
+                })
+            ).toBe(false);
+        });
+
         test('respects trimInput option', () => {
             expect(stringToBoolean(' true ', { trimInput: true })).toBe(true);
             expect(stringToBoolean(' true ', { trimInput: false })).toBe(false);
