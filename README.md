@@ -1,6 +1,6 @@
 # @parsekit/string-to-boolean
 
-A ZERO-DEPENDENCY robust TypeScript utility to convert strings to boolean values with extensive options and type safety.
+A zero-dependency TypeScript utility for parsing strings and primitive values into booleans with configurable, predictable behavior.
 
 [![npm version](https://img.shields.io/npm/v/@parsekit/string-to-boolean.svg)](https://www.npmjs.com/package/@parsekit/string-to-boolean)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -13,6 +13,17 @@ A ZERO-DEPENDENCY robust TypeScript utility to convert strings to boolean values
 - 💪 Strict mode for rigorous parsing
 - 🧩 Handles various input types (strings, numbers, booleans)
 - 0️⃣ Zero dependencies
+
+## Default behavior
+
+The parser recognizes these values by default:
+
+| Result | Values |
+| --- | --- |
+| `true` | `true`, `yes`, `y`, `1`, `on`, `enable`, `enabled`, `ok`, `positive` |
+| `false` | `false`, `no`, `n`, `0`, `off`, `disable`, `disabled`, `negative` |
+
+String input is trimmed and compared case-insensitively by default. Unknown strings return `false` in non-strict mode and throw `StringToBooleanError` in strict mode.
 
 ## Installation
 
@@ -85,8 +96,8 @@ Main function to convert various input types to boolean.
 
 ```typescript
 interface StringToBooleanOptions {
-  truthyValues?: string[];      // Default: ['true', 'yes', 'y', '1']
-  falsyValues?: string[];       // Default: ['false', 'no', 'n', '0']
+  truthyValues?: string[];      // Default includes common true-like values
+  falsyValues?: string[];       // Default includes common false-like values
   caseSensitive?: boolean;      // Default: false
   trimInput?: boolean;          // Default: true
   strict?: boolean;             // Default: false
@@ -107,8 +118,8 @@ The package comes with the following default values:
 
 ```typescript
 const DEFAULT_OPTIONS = {
-  truthyValues: ['true', 'yes', 'y', '1'],
-  falsyValues: ['false', 'no', 'n', '0'],
+  truthyValues: ['true', 'yes', 'y', '1', 'on', 'enable', 'enabled', 'ok', 'positive'],
+  falsyValues: ['false', 'no', 'n', '0', 'off', 'disable', 'disabled', 'negative'],
   caseSensitive: false,
   trimInput: true,
   strict: false
@@ -164,6 +175,8 @@ stringToBoolean('on', options);      // returns true
 stringToBoolean('active', options);  // returns true
 stringToBoolean('off', options);     // returns false
 ```
+
+Custom values follow the same trimming and case-sensitivity options as the input. For example, `truthyValues: [' YES ']` matches `'yes'` with the default options.
 
 ### Handling Special Values
 
